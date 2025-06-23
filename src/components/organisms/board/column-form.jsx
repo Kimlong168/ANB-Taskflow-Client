@@ -70,7 +70,11 @@ export const ColumnForm = ({ isOpen, handleOpen, boardId, defaultValue }) => {
       title={defaultValue ? "Edit Column" : "Create New Column"}
       isUpdating={defaultValue}
       handleSubmit={handleSubmit}
-      disabled={!formData.title.trim()}
+      disabled={
+        !formData.title.trim() ||
+        createColumn.isLoading ||
+        updateColumn.isLoading
+      }
     >
       <Input
         name="title"

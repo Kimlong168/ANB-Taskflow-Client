@@ -53,7 +53,9 @@ export const BoardForm = ({ isOpen, handleOpen, defaultValue }) => {
       title={defaultValue ? "Edit Board" : "Create New Board"}
       isUpdating={defaultValue}
       handleSubmit={handleSubmit}
-      disabled={!formData.title.trim()}
+      disabled={
+        !formData.title.trim() || createBoard.isLoading || updateBoard.isLoading
+      }
     >
       <Input
         name="title"

@@ -72,7 +72,9 @@ export const TaskForm = ({
         title={defaultValue ? "Edit Task" : `Add New Task to ${column?.title}`}
         isUpdating={defaultValue}
         handleSubmit={handleSubmit}
-        disabled={!formData.title.trim()}
+        disabled={
+          !formData.title.trim() || createTask.isLoading || updateTask.isLoading
+        }
       >
         <Input
           name="title"
