@@ -8,7 +8,7 @@ This project demonstrates proficiency in full-stack MERN development through a c
 
 [![View Backend Repo](https://img.shields.io/badge/View-Backend_Repo-blue?style=for-the-badge)](https://github.com/Kimlong168/ANB-Taskflow-Backend)
 
-[![Watch Demo](https://img.shields.io/badge/▶️%20Watch%20Demo-YouTube-red?logo=youtube)](https://youtu.be/b0YGkyuZeWY?si=KQbl3kX2MA6xTP-v)
+[![Watch Demo](https://img.shields.io/badge/▶️%20Watch%20Demo-YouTube-red?logo=youtube)](https://youtu.be/Mx0VF5Bk5Mg?si=1hh1r0oVZXzqFHKY)
 
 
 ## ✨ Core Features
@@ -208,8 +208,8 @@ This project follows the **Atomic Design** methodology by [Brad Frost](https://b
 ![List View](https://res.cloudinary.com/dzbtplz1o/image/upload/v1750676491/Screenshot_2025-06-23_175951_lke7jo.png)
 *Seamless switching between dark and light mode*
 
-### 🚀 Task Management Demo
-[![Task CRUD Operations](https://img.youtube.com/vi/b0YGkyuZeWY/0.jpg)](https://youtu.be/b0YGkyuZeWY?si=KQbl3kX2MA6xTP-v)
+### 🚀 Demo Video
+[![Task CRUD Operations](https://img.youtube.com/vi/b0YGkyuZeWY/0.jpg)](https://youtu.be/Mx0VF5Bk5Mg?si=1hh1r0oVZXzqFHKY)
 > **Watch Demo** – *Complete task lifecycle: create, update, move, and delete*
 
 
