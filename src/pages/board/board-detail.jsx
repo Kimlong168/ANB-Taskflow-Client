@@ -9,13 +9,19 @@ import { Loading } from "@/components/atoms/loading";
 import { ColumnForm } from "@/components/organisms/board/column-form";
 import { MetadataHeader } from "@/components/atoms/metadata-header";
 import { BoardDetailBody } from "@/components/organisms/board/board-detail-body";
+import { useQueryState } from "nuqs";
 
 const BoardDetail = () => {
   const { id } = useParams();
   const deleteColumn = useDeleteColumn(id);
   const { data, isLoading } = useBoard(id);
   const [isOpen, setIsOpen] = useState(false);
-  const [isListView, setIsListView] = useState(false);
+  const [isListView, setIsListView] = useQueryState("isListView", {
+    parse: (value) => value === "true",
+    serialize: (value) => String(value),
+    defaultValue: false,
+  });
+
   const [editColumn, setEditColumn] = useState(null);
 
   const handleCreateColumn = () => {

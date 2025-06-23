@@ -35,10 +35,10 @@ const LeftHeader = ({ title, description }) => {
         <ArrowLeft className="h-4 w-4 text-primary" />
       </Button>
       <div className="space-y-0.5">
-        <h2 className="text-xl font-semibold text-primary flex items-center gap-2 uppercase">
+        <h2 className="text-xl font-semibold text-primary gap-2 uppercase line-clamp-1">
           {title}
         </h2>
-        <p className="text-muted-foreground text-xs">
+        <p className="text-muted-foreground text-xs line-clamp-2">
           {description || "No description available"}
         </p>
       </div>
@@ -48,7 +48,7 @@ const LeftHeader = ({ title, description }) => {
 
 const RightHeader = ({ isListView, setIsListView }) => {
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-1 md:space-x-4">
       <div className="flex items-center space-x-2">
         <Label
           htmlFor="view-toggle"
