@@ -147,16 +147,6 @@ This project follows the **Atomic Design** methodology by [Brad Frost](https://b
 - Modern bundling with tree-shaking
 - Better developer experience than Create React App
 
-**MongoDB with Mongoose:**
-- Flexible schema for evolving task requirements
-- Easy integration with Node.js
-- Powerful querying capabilities
-
-**Express.js Framework:**
-- Lightweight and fast
-- Extensive middleware ecosystem
-- Perfect for RESTful APIs
-
 ## ✨ Bonus Features Implemented
 
 ### 🎛️ Advanced Column Management
