@@ -94,7 +94,7 @@ export const TaskForm = ({
             { value: 2, label: "Medium" },
             { value: 3, label: "High" },
           ]}
-          value={formData.status}
+          value={formData.priority}
           onChange={(v) => setFormData({ ...formData, priority: v })}
           placeholder="select priority"
           defaultValue={1}
