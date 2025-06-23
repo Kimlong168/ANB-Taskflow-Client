@@ -209,7 +209,11 @@ This project follows the **Atomic Design** methodology by [Brad Frost](https://b
 *Seamless switching between dark and light mode*
 
 ### 🚀 Demo Video
-[![Task CRUD Operations](https://img.youtube.com/vi/b0YGkyuZeWY/0.jpg)](https://youtu.be/Mx0VF5Bk5Mg?si=1hh1r0oVZXzqFHKY)
+
+[![Task CRUD Operations](https://img.youtube.com/vi/Mx0VF5Bk5Mg/0.jpg)](https://youtu.be/Mx0VF5Bk5Mg?si=1hh1r0oVZXzqFHKY)
+
+*Click the image above to watch a short demo of task CRUD operations in action.*
+
 > **Watch Demo** – *Complete task lifecycle: create, update, move, and delete*
 
 ## 👨‍💻 Author
