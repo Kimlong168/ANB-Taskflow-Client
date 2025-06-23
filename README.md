@@ -212,7 +212,6 @@ This project follows the **Atomic Design** methodology by [Brad Frost](https://b
 [![Task CRUD Operations](https://img.youtube.com/vi/b0YGkyuZeWY/0.jpg)](https://youtu.be/Mx0VF5Bk5Mg?si=1hh1r0oVZXzqFHKY)
 > **Watch Demo** – *Complete task lifecycle: create, update, move, and delete*
 
-
 ## 👨‍💻 Author
 
 **Chann Kimlong**
