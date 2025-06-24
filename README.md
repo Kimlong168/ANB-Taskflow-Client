@@ -94,13 +94,13 @@ VITE_APP_BASE_URL=http://localhost:5173
 
 ```
 
-**Frontend development server:**
+### 4. Running the development server
 ```bash
 npm run dev
 ```
 Frontend runs on: `http://localhost:5173`
 
-### Production Build
+### 5. Production Build
 
 **Build the frontend:**
 ```bash
