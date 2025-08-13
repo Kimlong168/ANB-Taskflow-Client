@@ -8,8 +8,16 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(
   (config) => {
-    const token = JSON.parse(localStorage.getItem("token"));
-    config.headers.Authorization = `Bearer ${token}`;
+    let token;
+    try {
+      token = JSON.parse(localStorage.getItem("token"));
+    } catch {
+      token = null;
+    }
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
     if (config.data instanceof FormData) {
       config.headers["Content-Type"] = "multipart/form-data";
     } else {
