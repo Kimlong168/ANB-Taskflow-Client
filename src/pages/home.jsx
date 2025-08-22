@@ -88,7 +88,7 @@ const LeftHeroContent = () => {
       <div className="space-y-4">
         <Badge variant="secondary" className="inline-flex items-center gap-2">
           <Zap className="h-3 w-3" />
-          New Release
+          New Release v2.0.1
         </Badge>
 
         <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
@@ -129,7 +129,10 @@ const LeftHeroContent = () => {
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
-          <Link to="/register">
+          <Link
+            to="https://youtu.be/Mx0VF5Bk5Mg?si=WFlDBDL5dA9s4q2Y"
+            target="_blank"
+          >
             <Button
               variant="outline"
               size="lg"
@@ -231,7 +234,7 @@ const RightVisualContent = () => {
 const Footer = () => {
   return (
     <div className="text-center space-y-3 pb-8">
-      <span className="uppercase">Submitted By:</span>
+      <span className="uppercase">Developed By:</span>
       <h3 className="font-bold text-xl">Mr. Chann Kimlong</h3>
     </div>
   );
