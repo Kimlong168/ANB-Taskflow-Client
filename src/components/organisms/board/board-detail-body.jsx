@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import { useMoveTask } from "@/hooks/use-task";
 import { useUpdateBoard } from "@/hooks/use-board";
@@ -31,9 +31,22 @@ export const BoardDetailBody = ({
   const moveTask = useMoveTask(currentBoard._id);
   const reorderColumn = useUpdateBoard();
   const sensors = useSensors(useSensor(PointerSensor));
+
+  const [localColumns, setLocalColumns] = useState(currentBoard.columns || []);
+  const prevColumnsRef = useRef(localColumns);
+
+  useEffect(() => {
+    setLocalColumns(currentBoard.columns || []);
+  }, [currentBoard.columns]);
+
   const [isOpen, setIsOpen] = useState(false);
   const [columnToAddTask, setColumnToAddTask] = useState(null);
   const [editTask, setEditTask] = useState(null);
+
+  const columnIds = useMemo(
+    () => (localColumns || []).map((c) => c._id),
+    [localColumns]
+  );
 
   const handleAddTask = (column) => {
     setColumnToAddTask(column);
@@ -46,48 +59,91 @@ export const BoardDetailBody = ({
     setIsOpen(true);
   };
 
+  const removeTaskFromColumn = (cols, columnId, taskId) => {
+    const idx = cols.findIndex((c) => c._id === columnId);
+    if (idx === -1) return cols;
+
+    const col = cols[idx];
+    const tasks = col.tasks || [];
+    const tIdx = tasks.findIndex((t) => t._id === taskId);
+    if (tIdx === -1) return cols;
+
+    const next = [...cols];
+    next[idx] = { ...col, tasks: tasks.filter((_, i) => i !== tIdx) };
+    return next;
+  };
+
+  const addTaskToColumnEnd = (cols, columnId, task) => {
+    const idx = cols.findIndex((c) => c._id === columnId);
+    if (idx === -1) return cols;
+
+    const col = cols[idx];
+    const tasks = col.tasks || [];
+    const next = [...cols];
+    next[idx] = { ...col, tasks: [...tasks, task] };
+    return next;
+  };
+
+  const findTask = (cols, columnId, taskId) => {
+    const col = cols.find((c) => c._id === columnId);
+    if (!col) return null;
+    const tasks = col.tasks || [];
+    return tasks.find((t) => t._id === taskId) || null;
+  };
+
   const handleDragEnd = async (event) => {
     const { active, over } = event;
-
-    // reorder column
     if (!over || active.id === over.id) return;
 
-    const activeColumnIndex = currentBoard.columns.findIndex(
-      (col) => col._id === active.id
-    );
-    const overColumnIndex = currentBoard.columns.findIndex(
-      (col) => col._id === over.id
-    );
-
-    // 👇 Check if it's a column reorder (they exist in columns array)
+    const activeColumnIndex = columnIds.indexOf(active.id);
+    const overColumnIndex = columnIds.indexOf(over.id);
     const isColumnDrag = activeColumnIndex !== -1 && overColumnIndex !== -1;
 
+    prevColumnsRef.current = localColumns;
+
     if (isColumnDrag) {
-      const newColumns = arrayMove(
-        currentBoard.columns,
+      const optimistic = arrayMove(
+        localColumns,
         activeColumnIndex,
         overColumnIndex
       );
+      setLocalColumns(optimistic);
 
-      const newColumnIds = newColumns.map((x) => x._id);
-
-      await reorderColumn.mutateAsync({
-        id: currentBoard._id,
-        columns: newColumnIds,
-        title: currentBoard.title,
-        description: currentBoard?.description,
-      });
-
+      try {
+        const newColumnIds = optimistic.map((x) => x._id);
+        await reorderColumn.mutateAsync({
+          id: currentBoard._id,
+          columns: newColumnIds,
+          title: currentBoard.title,
+          description: currentBoard?.description,
+        });
+      } catch {
+        setLocalColumns(prevColumnsRef.current);
+      }
       return;
     }
 
-    // otherwise move task
-    if (over.id === active.data.current) return;
+    const fromColumnId = active.data?.current;
+    const toColumnId = over.id;
 
-    await moveTask.mutateAsync({
-      id: active.id,
-      columnId: over.id,
-    });
+    if (!fromColumnId || toColumnId === fromColumnId) return;
+
+    const taskId = active.id;
+    const task = findTask(localColumns, fromColumnId, taskId);
+    if (!task) return;
+
+    const removed = removeTaskFromColumn(localColumns, fromColumnId, taskId);
+    const optimistic = addTaskToColumnEnd(removed, toColumnId, task);
+    setLocalColumns(optimistic);
+
+    try {
+      await moveTask.mutateAsync({
+        id: taskId,
+        columnId: toColumnId,
+      });
+    } catch {
+      setLocalColumns(prevColumnsRef.current);
+    }
   };
 
   return (
@@ -104,17 +160,17 @@ export const BoardDetailBody = ({
           collisionDetection={closestCenter}
         >
           <SortableContext
-            items={currentBoard.columns.map((col) => col._id)}
+            items={columnIds}
             strategy={
               isListView
                 ? verticalListSortingStrategy
                 : horizontalListSortingStrategy
             }
           >
-            {currentBoard?.columns.map((column) => (
+            {localColumns.map((column) => (
               <ColumnCard
                 key={column._id}
-                currentBoard={currentBoard}
+                currentBoard={{ ...currentBoard, columns: localColumns }}
                 column={column}
                 handleAddTask={handleAddTask}
                 handleEditColumn={handleEditColumn}
